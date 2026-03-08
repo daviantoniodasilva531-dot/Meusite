@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Página não encontrada</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: black;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 3em;
+    margin: 0;
+  }
+
+  p {
+    font-size: 1.2em;
+    margin: 10px 0 20px 0;
+  }
+
+  button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background: red;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: darkred;
+  }
+
+  canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+</style>
+</head>
+<body>
+
+<h1>😅 Ops! Página não encontrada</h1>
+<p>Mas olha essas estrelas enquanto você espera… 🌟</p>
+<button onclick="window.location.href='index.html'">Voltar para o início</button>
+
+<canvas id="estrelas"></canvas>
+
+<script>
+// Estrelas animadas
+let canvas = document.getElementById('estrelas');
+let ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let estrelas = [];
+for(let i=0; i<80; i++){
+  estrelas.push({
+    x: Math.random()*canvas.width,
+    y: Math.random()*canvas.height,
+    r: Math.random()*2,
+    dy: Math.random()*0.5 + 0.2
+  });
+}
+
+function animar(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = "white";
+  for(let e of estrelas){
+    ctx.beginPath();
+    ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
+    ctx.fill();
+    e.y += e.dy;
+    if(e.y > canvas.height){
+      e.y = 0;
+      e.x = Math.random()*canvas.width;
+    }
+  }
+  requestAnimationFrame(animar);
+}
+animar();
+
+// Ajusta o canvas se a janela mudar de tamanho
+window.addEventListener('resize', () => {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+});
+</script>
+
+</body>
+</html>
