@@ -1,110 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-<title>Meu Site</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Site do Davi</title>
 
 <style>
 
 body{
-  font-family: Arial;
-  background:black;
-  color:white;
-  margin:0;
-  overflow-x:hidden;
+font-family:Arial;
+background:black;
+color:white;
+margin:0;
+text-align:center;
+overflow-x:hidden;
 }
 
 canvas{
-  position:fixed;
-  top:0;
-  left:0;
-  z-index:-1;
-}
-
-/* CONQUISTA */
-
-.conquista{
-  position:fixed;
-  top:20px;
-  right:-350px;
-  width:300px;
-  background:#222;
-  border-left:5px solid gold;
-  padding:15px;
-  border-radius:10px;
-  transition:0.5s;
-}
-
-.conquista.mostrar{
-  right:20px;
-}
-
-.conquista h3{
-  margin:0;
-  font-size:16px;
-  color:gold;
-}
-
-.conquista p{
-  margin:5px 0 0 0;
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
 .container{
-  display:flex;
-  justify-content:space-between;
-  padding:20px;
+display:flex;
+justify-content:space-around;
+flex-wrap:wrap;
+padding:20px;
 }
 
 .site{
-  width:60%;
-  text-align:center;
+max-width:500px;
 }
 
-.livro{
-  width:35%;
-  background:#111;
-  padding:15px;
-  border-radius:10px;
+.caixa{
+background:#111;
+padding:15px;
+border-radius:10px;
+margin-top:20px;
 }
 
 textarea{
-  width:100%;
-  height:200px;
-  border-radius:8px;
-  border:none;
-  padding:10px;
+width:100%;
+height:150px;
+border-radius:8px;
+border:none;
+padding:10px;
 }
 
-.salvar{
-  margin-top:10px;
-  padding:10px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  background:#4CAF50;
-  color:white;
+input{
+width:80%;
+padding:8px;
+border-radius:6px;
+border:none;
 }
 
-.botao{
-  background:red;
-  color:white;
-  padding:15px 30px;
-  font-size:20px;
-  border:none;
-  border-radius:8px;
-  cursor:pointer;
-  animation:piscar 1s infinite;
-  margin:10px;
+button{
+padding:10px 20px;
+border:none;
+border-radius:8px;
+background:red;
+color:white;
+cursor:pointer;
+margin:5px;
 }
 
-@keyframes piscar{
-  0%{opacity:1;}
-  50%{opacity:0.4;}
-  100%{opacity:1;}
+#relogio{
+font-size:24px;
+color:cyan;
+margin-bottom:10px;
 }
 
-.relogio{
-  font-size:25px;
-  color:cyan;
+/* conquista */
+
+.conquista{
+position:fixed;
+top:20px;
+right:-320px;
+width:260px;
+background:#222;
+border-left:5px solid gold;
+padding:10px;
+border-radius:8px;
+transition:0.5s;
+}
+
+.conquista.mostrar{
+right:20px;
+}
+
+.conquista h3{
+margin:0;
+color:gold;
 }
 
 </style>
@@ -113,40 +101,70 @@ textarea{
 <body>
 
 <div id="conquista" class="conquista">
-<h3 id="tituloConquista"></h3>
-<p id="textoConquista"></p>
+<h3 id="titulo"></h3>
+<p id="texto"></p>
 </div>
 
 <canvas id="estrelas"></canvas>
+
+<h1>Meu primeiro site</h1>
+
+<div id="relogio"></div>
 
 <div class="container">
 
 <div class="site">
 
-<h1>Meu primeiro site</h1>
+<p>Acabei de criar meu primeiro site</p>
+<p>eu não fiz nada sobre o site até agora, mas vou fazer</p>
 
-<div class="relogio" id="relogio"></div>
+<button>ME AJUDE</button>
+<button>DOE AQUI</button>
 
+<p>não tem pix</p>
+<p>ainda.</p>
+
+<p>atualizando quase todo dia</p>
 <p>eu amo programação, você ama programação?</p>
+
+<div class="caixa">
 
 <h2>🎮 Minijogo</h2>
 
 <p>Pontos: <span id="pontos">0</span></p>
 
-<button onclick="clicar()">CLIQUE AQUI</button>
+<button onclick="clicar()">CLIQUE</button>
 
 </div>
 
-<div class="livro">
+<div class="caixa">
+
+<h2>💡 Sugestões</h2>
+
+<input id="sugestao" placeholder="Escreva uma sugestão">
+
+<button onclick="enviarSug()">Enviar</button>
+
+<div id="listaSug"></div>
+
+</div>
+
+</div>
+
+<div class="site">
+
+<div class="caixa">
 
 <h2>📖 Livro de Anotações</h2>
 
-<textarea id="texto"></textarea>
+<textarea id="livro"></textarea>
 
 <br>
 
-<button class="salvar" onclick="salvar()">Salvar</button>
-<button class="salvar" onclick="limpar()">Apagar</button>
+<button onclick="salvar()">Salvar</button>
+<button onclick="limpar()">Apagar</button>
+
+</div>
 
 </div>
 
@@ -154,44 +172,68 @@ textarea{
 
 <script>
 
-/* RELÓGIO */
+/* relógio */
 
 function atualizarRelogio(){
-let agora=new Date()
 
-let h=agora.getHours()
-let m=agora.getMinutes()
-let s=agora.getSeconds()
+let a=new Date()
 
-if(h<10)h="0"+h
-if(m<10)m="0"+m
-if(s<10)s="0"+s
+let h=a.getHours().toString().padStart(2,"0")
+let m=a.getMinutes().toString().padStart(2,"0")
+let s=a.getSeconds().toString().padStart(2,"0")
 
 document.getElementById("relogio").innerText=h+":"+m+":"+s
+
 }
 
 setInterval(atualizarRelogio,1000)
+atualizarRelogio()
 
-/* LIVRO */
+/* livro */
 
 function salvar(){
-let texto=document.getElementById("texto").value
-localStorage.setItem("livroTexto",texto)
+
+let t=document.getElementById("livro").value
+localStorage.setItem("livro",t)
+
 }
 
 function limpar(){
-localStorage.removeItem("livroTexto")
-document.getElementById("texto").value=""
+
+localStorage.removeItem("livro")
+document.getElementById("livro").value=""
+
 }
 
 window.onload=function(){
-let salvo=localStorage.getItem("livroTexto")
-if(salvo){
-document.getElementById("texto").value=salvo
-}
+
+let t=localStorage.getItem("livro")
+
+if(t){
+document.getElementById("livro").value=t
 }
 
-/* MINIJOGO */
+}
+
+/* sugestões */
+
+function enviarSug(){
+
+let s=document.getElementById("sugestao").value
+
+if(s!=""){
+
+let div=document.getElementById("listaSug")
+
+div.innerHTML+="<p>"+s+"</p>"
+
+document.getElementById("sugestao").value=""
+
+}
+
+}
+
+/* minijogo */
 
 let pontos=0
 
@@ -202,27 +244,25 @@ pontos++
 document.getElementById("pontos").innerText=pontos
 
 if(pontos==100){
-mostrarConquista("Curioso","Você chegou a 100 pontos!")
+conquista("Curioso","100 pontos!")
 }
 
 if(pontos==200){
-mostrarConquista("Viciado em cliques","200 pontos alcançados!")
+conquista("Cliqueiro","200 pontos!")
 }
 
 if(pontos==300){
-mostrarConquista("Foda você","300 pontos! Você não tem o que fazer não?")
+conquista("Sem vida","300 pontos kkk")
 }
 
 }
 
-/* SISTEMA DE CONQUISTA */
-
-function mostrarConquista(titulo,texto){
+function conquista(titulo,texto){
 
 let c=document.getElementById("conquista")
 
-document.getElementById("tituloConquista").innerText="🏆 Conquista desbloqueada!"
-document.getElementById("textoConquista").innerText=titulo+" - "+texto
+document.getElementById("titulo").innerText="🏆 "+titulo
+document.getElementById("texto").innerText=texto
 
 c.classList.add("mostrar")
 
@@ -232,7 +272,7 @@ c.classList.remove("mostrar")
 
 }
 
-/* ESTRELAS */
+/* estrelas */
 
 let canvas=document.getElementById("estrelas")
 let ctx=canvas.getContext("2d")
@@ -242,7 +282,7 @@ canvas.height=window.innerHeight
 
 let estrelas=[]
 
-for(let i=0;i<30;i++){
+for(let i=0;i<20;i++){
 
 estrelas.push({
 x:Math.random()*canvas.width,
@@ -252,21 +292,19 @@ r:Math.random()*2
 
 }
 
-function desenhar(){
+function animar(){
 
 ctx.clearRect(0,0,canvas.width,canvas.height)
 
 ctx.fillStyle="white"
 
-for(let i=0;i<estrelas.length;i++){
-
-let e=estrelas[i]
+for(let e of estrelas){
 
 ctx.beginPath()
 ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
 ctx.fill()
 
-e.y+=0.2
+e.y+=0.3
 
 if(e.y>canvas.height){
 e.y=0
@@ -274,11 +312,11 @@ e.y=0
 
 }
 
-requestAnimationFrame(desenhar)
+requestAnimationFrame(animar)
 
 }
 
-desenhar()
+animar()
 
 </script>
 
