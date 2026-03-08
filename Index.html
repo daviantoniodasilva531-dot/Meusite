@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Meu Site</title>
+
+<style>
+
+body{
+  font-family: Arial;
+  background:black;
+  color:white;
+  margin:0;
+  overflow-x:hidden;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+
+/* CONQUISTA */
+
+.conquista{
+  position:fixed;
+  top:20px;
+  right:-350px;
+  width:300px;
+  background:#222;
+  border-left:5px solid gold;
+  padding:15px;
+  border-radius:10px;
+  transition:0.5s;
+}
+
+.conquista.mostrar{
+  right:20px;
+}
+
+.conquista h3{
+  margin:0;
+  font-size:16px;
+  color:gold;
+}
+
+.conquista p{
+  margin:5px 0 0 0;
+}
+
+.container{
+  display:flex;
+  justify-content:space-between;
+  padding:20px;
+}
+
+.site{
+  width:60%;
+  text-align:center;
+}
+
+.livro{
+  width:35%;
+  background:#111;
+  padding:15px;
+  border-radius:10px;
+}
+
+textarea{
+  width:100%;
+  height:200px;
+  border-radius:8px;
+  border:none;
+  padding:10px;
+}
+
+.salvar{
+  margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  background:#4CAF50;
+  color:white;
+}
+
+.botao{
+  background:red;
+  color:white;
+  padding:15px 30px;
+  font-size:20px;
+  border:none;
+  border-radius:8px;
+  cursor:pointer;
+  animation:piscar 1s infinite;
+  margin:10px;
+}
+
+@keyframes piscar{
+  0%{opacity:1;}
+  50%{opacity:0.4;}
+  100%{opacity:1;}
+}
+
+.relogio{
+  font-size:25px;
+  color:cyan;
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="conquista" class="conquista">
+<h3 id="tituloConquista"></h3>
+<p id="textoConquista"></p>
+</div>
+
+<canvas id="estrelas"></canvas>
+
+<div class="container">
+
+<div class="site">
+
+<h1>Meu primeiro site</h1>
+
+<div class="relogio" id="relogio"></div>
+
+<p>eu amo programação, você ama programação?</p>
+
+<h2>🎮 Minijogo</h2>
+
+<p>Pontos: <span id="pontos">0</span></p>
+
+<button onclick="clicar()">CLIQUE AQUI</button>
+
+</div>
+
+<div class="livro">
+
+<h2>📖 Livro de Anotações</h2>
+
+<textarea id="texto"></textarea>
+
+<br>
+
+<button class="salvar" onclick="salvar()">Salvar</button>
+<button class="salvar" onclick="limpar()">Apagar</button>
+
+</div>
+
+</div>
+
+<script>
+
+/* RELÓGIO */
+
+function atualizarRelogio(){
+let agora=new Date()
+
+let h=agora.getHours()
+let m=agora.getMinutes()
+let s=agora.getSeconds()
+
+if(h<10)h="0"+h
+if(m<10)m="0"+m
+if(s<10)s="0"+s
+
+document.getElementById("relogio").innerText=h+":"+m+":"+s
+}
+
+setInterval(atualizarRelogio,1000)
+
+/* LIVRO */
+
+function salvar(){
+let texto=document.getElementById("texto").value
+localStorage.setItem("livroTexto",texto)
+}
+
+function limpar(){
+localStorage.removeItem("livroTexto")
+document.getElementById("texto").value=""
+}
+
+window.onload=function(){
+let salvo=localStorage.getItem("livroTexto")
+if(salvo){
+document.getElementById("texto").value=salvo
+}
+}
+
+/* MINIJOGO */
+
+let pontos=0
+
+function clicar(){
+
+pontos++
+
+document.getElementById("pontos").innerText=pontos
+
+if(pontos==100){
+mostrarConquista("Curioso","Você chegou a 100 pontos!")
+}
+
+if(pontos==200){
+mostrarConquista("Viciado em cliques","200 pontos alcançados!")
+}
+
+if(pontos==300){
+mostrarConquista("Foda você","300 pontos! Você não tem o que fazer não?")
+}
+
+}
+
+/* SISTEMA DE CONQUISTA */
+
+function mostrarConquista(titulo,texto){
+
+let c=document.getElementById("conquista")
+
+document.getElementById("tituloConquista").innerText="🏆 Conquista desbloqueada!"
+document.getElementById("textoConquista").innerText=titulo+" - "+texto
+
+c.classList.add("mostrar")
+
+setTimeout(()=>{
+c.classList.remove("mostrar")
+},4000)
+
+}
+
+/* ESTRELAS */
+
+let canvas=document.getElementById("estrelas")
+let ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let estrelas=[]
+
+for(let i=0;i<30;i++){
+
+estrelas.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+})
+
+}
+
+function desenhar(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+for(let i=0;i<estrelas.length;i++){
+
+let e=estrelas[i]
+
+ctx.beginPath()
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
+ctx.fill()
+
+e.y+=0.2
+
+if(e.y>canvas.height){
+e.y=0
+}
+
+}
+
+requestAnimationFrame(desenhar)
+
+}
+
+desenhar()
+
+</script>
+
+</body>
+</html>
