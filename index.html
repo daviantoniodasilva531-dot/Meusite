@@ -6,15 +6,16 @@
 <title>Site do Davi</title>
 
 <style>
+
 body{
 margin:0;
-font-family:Arial, sans-serif;
+font-family:Arial;
 background:black;
 color:white;
 text-align:center;
 }
 
-/* Tela de espera */
+/* tela de espera */
 #espera{
 position:fixed;
 top:0;
@@ -28,7 +29,7 @@ font-size:30px;
 z-index:10;
 }
 
-/* Estrelas */
+/* estrelas */
 canvas{
 position:fixed;
 top:0;
@@ -36,7 +37,7 @@ left:0;
 z-index:-1;
 }
 
-/* Caixa de conquista */
+/* conquista */
 #conquista{
 position:fixed;
 bottom:20px;
@@ -45,24 +46,20 @@ background:#222;
 padding:15px;
 border-radius:10px;
 display:none;
-max-width:200px;
-}
-
-.mostrar{
-display:block !important;
 }
 
 textarea{
-width:80%;
-max-width:400px;
-height:100px;
+width:90%;
+max-width:500px;
+height:120px;
 }
 
 button{
-margin:5px;
 padding:10px;
+margin:5px;
 font-size:16px;
 }
+
 </style>
 </head>
 
@@ -72,105 +69,230 @@ font-size:16px;
 
 <canvas id="estrelas"></canvas>
 
-<h1>Site do Davi 🚀</h1>
+<h1>🚀 Site do Davi</h1>
 
 <h2 id="relogio"></h2>
 
 <h3>📖 Livro</h3>
-<textarea id="livro" placeholder="Escreva algo..."></textarea><br>
+
+<textarea id="livro" placeholder="Escreva algo aqui..."></textarea><br>
+
 <button onclick="salvar()">Salvar</button>
 <button onclick="limpar()">Limpar</button>
 
 <h3>🎮 Minijogo</h3>
+
 <h2>Pontos: <span id="pontos">0</span></h2>
-<button onclick="clicar()">Clique aqui</button>
+<h3>Nível: <span id="nivel">1</span></h3>
+
+<button onclick="clicar()">CLIQUE</button>
 
 <h3>💡 Sugestões</h3>
+
 <form action="mailto:seuemail@gmail.com" method="post" enctype="text/plain">
+
 <input type="text" name="nome" placeholder="Seu nome"><br><br>
-<textarea name="mensagem" placeholder="Sua sugestão"></textarea><br>
-<button type="submit">Enviar sugestão</button>
+
+<textarea name="mensagem" placeholder="Sugestão"></textarea><br>
+
+<button type="submit">Enviar</button>
+
 </form>
 
 <p>Se algo faltar… Te amo mesmo ❤️</p>
 
 <div id="conquista">
+
 <h3 id="titulo"></h3>
 <p id="texto"></p>
+
 </div>
 
 <script>
 
-/* ESPERA RGB */
-let r=0,g=0,b=0,dr=1,dg=2,db=3;
+/* RGB ESPERA */
+
+let r=0,g=0,b=0,dr=1,dg=2,db=3
 
 function animarRGB(){
-r+=dr;if(r>255||r<0) dr*=-1;
-g+=dg;if(g>255||g<0) dg*=-1;
-b+=db;if(b>255||b<0) db*=-1;
 
-let espera=document.getElementById('espera');
+r+=dr;if(r>255||r<0)dr*=-1
+g+=dg;if(g>255||g<0)dg*=-1
+b+=db;if(b>255||b<0)db*=-1
+
+let espera=document.getElementById("espera")
+
 if(espera){
-espera.style.background=`rgb(${r},${g},${b})`;
+espera.style.background=`rgb(${r},${g},${b})`
 }
 
-requestAnimationFrame(animarRGB);
-}
-animarRGB();
+requestAnimationFrame(animarRGB)
 
-/* RELÓGIO */
-function atualizarRelogio(){
-let a=new Date();
-let h=a.getHours().toString().padStart(2,"0");
-let m=a.getMinutes().toString().padStart(2,"0");
-let s=a.getSeconds().toString().padStart(2,"0");
-document.getElementById("relogio").innerText=h+":"+m+":"+s;
 }
-setInterval(atualizarRelogio,1000);
-atualizarRelogio();
 
-/* LIVRO */
+animarRGB()
+
+/* relógio */
+
+function relogio(){
+
+let d=new Date()
+
+let h=d.getHours().toString().padStart(2,"0")
+let m=d.getMinutes().toString().padStart(2,"0")
+let s=d.getSeconds().toString().padStart(2,"0")
+
+document.getElementById("relogio").innerText=h+":"+m+":"+s
+
+}
+
+setInterval(relogio,1000)
+
+relogio()
+
+/* livro */
+
 function salvar(){
-let t=document.getElementById("livro").value;
-localStorage.setItem("livro",t);
+
+let t=document.getElementById("livro").value
+
+localStorage.setItem("livro",t)
+
 }
 
 function limpar(){
-localStorage.removeItem("livro");
-document.getElementById("livro").value="";
+
+localStorage.removeItem("livro")
+
+document.getElementById("livro").value=""
+
 }
 
-/* MINIJOGO */
-let pontos=0;
+/* minijogo */
+
+let pontos=0
+let nivel=1
 
 function clicar(){
-pontos++;
-document.getElementById("pontos").innerText=pontos;
+
+pontos++
+
+if(pontos%50==0){
+nivel++
+alert("Nível "+nivel)
+}
+
+document.getElementById("pontos").innerText=pontos
+document.getElementById("nivel").innerText=nivel
+
+if(pontos==10){
+conquista("Começando","10 cliques")
+}
 
 if(pontos==100){
-conquista("Curioso","Você chegou a 100 pontos");
+conquista("Curioso","100 cliques")
 }
-if(pontos==200){
-conquista("Cliqueiro","200 pontos!");
+
+if(pontos==500){
+conquista("Viciado","500 cliques")
 }
-if(pontos==300){
-conquista("Sem vida","300 pontos kkk");
+
+if(pontos==1000){
+conquista("Lenda","1000 cliques")
+
 }
+
 }
+
+/* conquista */
 
 function conquista(titulo,texto){
-let c=document.getElementById("conquista");
-document.getElementById("titulo").innerText="🏆 "+titulo;
-document.getElementById("texto").innerText=texto;
 
-c.classList.add("mostrar");
+let c=document.getElementById("conquista")
+
+document.getElementById("titulo").innerText="🏆 "+titulo
+document.getElementById("texto").innerText=texto
+
+c.style.display="block"
 
 setTimeout(()=>{
-c.classList.remove("mostrar");
-},4000);
+
+c.style.display="none"
+
+},4000)
+
 }
 
-/* ESTRELAS */
-let canvas=document.getElemk2d");
+/* estrelas */
 
-canvbouop
+let canvas=document.getElementById("estrelas")
+let ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let estrelas=[]
+
+for(let i=0;i<120;i++){
+
+estrelas.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*3,
+v:Math.random()*0.5+0.1
+
+})
+
+}
+
+function animar(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height)
+
+ctx.fillStyle="white"
+
+for(let e of estrelas){
+
+ctx.beginPath()
+ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
+ctx.fill()
+
+e.y+=e.v
+
+if(e.y>canvas.height){
+
+e.y=0
+
+}
+
+}
+
+requestAnimationFrame(animar)
+
+}
+
+animar()
+
+/* carregamento */
+
+window.onload=function(){
+
+let espera=document.getElementById("espera")
+
+if(espera){
+espera.style.display="none"
+}
+
+let t=localStorage.getItem("livro")
+
+if(t){
+document.getElementById("livro").value=t
+}
+
+}
+
+</script>
+
+</body>
+</html>
