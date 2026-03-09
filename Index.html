@@ -1,246 +1,167 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Site do Davi</title>
-<style>
-  /* ==================== Página de espera ==================== */
-  #espera {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-family: Arial, sans-serif;
-    font-size: 1.5em;
-    text-align: center;
-    z-index: 9999;
-    transition: opacity 0.5s;
-  }
-
-  /* ==================== Seu site ==================== */
-  body {
-    font-family: Arial;
-    font-size: 18px;
-    line-height: 1.6;
-    background: black;
-    color: white;
-    margin: 0;
-    text-align: center;
-  }
-
-  .container {
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-  }
-
-  canvas {
-    position: fixed;
-    top: 0; left: 0;
-    z-index: -1;
-  }
-
-  button {
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    background: red;
-    color: white;
-    cursor: pointer;
-    margin: 5px;
-    font-size: 16px;
-  }
-
-  textarea {
-    width: 100%;
-    height: 150px;
-    border-radius: 8px;
-    border: none;
-    padding: 10px;
-  }
-
-  input {
-    width: 70%;
-    padding: 8px;
-    border-radius: 6px;
-    border: none;
-  }
-
-  .caixa {
-    background: #111;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-
-  #relogio {
-    font-size: 24px;
-    color: cyan;
-    margin-bottom: 15px;
-  }
-
-  .conquista {
-    position: fixed;
-    top: 20px;
-    right: -320px;
-    width: 260px;
-    background: #222;
-    border-left: 5px solid gold;
-    padding: 10px;
-    border-radius: 8px;
-    transition: 0.5s;
-  }
-
-  .conquista.mostrar {
-    right: 20px;
-  }
-
-  .conquista h3 {
-    margin: 0;
-    color: gold;
-  }
-</style>
-</head>
-<body>
-
-<!-- ==================== DIV DE ESPERA ==================== -->
-<div id="espera">
-  <h1>🚀 Seu site está carregando!</h1>
-  <p>Espere alguns segundos… 😎</p>
-</div>
-
-<!-- ==================== CONTEÚDO DO SITE ==================== -->
-<div id="conquista" class="conquista">
-  <h3 id="titulo"></h3>
-  <p id="texto"></p>
-</div>
-
-<canvas id="estrelas"></canvas>
-
-<div class="container">
-  <h1>Meu primeiro site</h1>
-  <div id="relogio"></div>
-  <p>Acabei de criar meu primeiro site.</p>
-  <p>Eu não fiz nada sobre o site até agora, mas vou fazer.</p>
-
-  <button>ME AJUDE</button>
-  <button>DOE AQUI</button>
-
-  <p>Não tem pix ainda.</p>
-  <p>Atualizando quase todo dia.</p>
-  <p>Eu amo programação, você ama programação?</p>
-
-  <div class="caixa">
-    <h2>🎮 Minijogo</h2>
-    <p>Pontos: <span id="pontos">0</span></p>
-    <button onclick="clicar()">CLIQUE</button>
-  </div>
-
-  <div class="caixa">
-    <h2>💡 Enviar sugestão</h2>
-    <form action="https://formsubmit.co/daviantoniodasilva531@gmail.com" method="POST">
-      <input type="text" name="Sugestao" placeholder="Escreva uma sugestão" required>
-      <br><br>
-      <button type="submit">Enviar</button>
-    </form>
-  </div>
-
-  <div class="caixa">
-    <h2>📖 Livro de anotações</h2>
-    <textarea id="livro"></textarea>
-    <br>
-    <button onclick="salvar()">Salvar</button>
-    <button onclick="limpar()">Apagar</button>
-  </div>
-</div>
-
 <script>
-/* ==================== SCRIPT DE ESPERA RGB ==================== */
+
+/* ==================== ESPERA RGB ==================== */
+
 let r=0,g=0,b=0,dr=1,dg=2,db=3;
+
 function animarRGB(){
   r+=dr;if(r>255||r<0) dr*=-1;
   g+=dg;if(g>255||g<0) dg*=-1;
   b+=db;if(b>255||b<0) db*=-1;
-  document.getElementById('espera').style.background = `rgb(${r},${g},${b})`;
+
+  document.getElementById('espera').style.background =
+  `rgb(${r},${g},${b})`;
+
   requestAnimationFrame(animarRGB);
 }
+
 animarRGB();
 
-/* ==================== ESCONDER DIV DE ESPERA QUANDO O SITE CARREGAR ==================== */
-window.onload = function(){
-  document.getElementById('espera').style.display = 'none';
-};
+
 
 /* ==================== RELÓGIO ==================== */
+
 function atualizarRelogio(){
-  let a=new Date();
-  let h=a.getHours().toString().padStart(2,"0");
-  let m=a.getMinutes().toString().padStart(2,"0");
-  let s=a.getSeconds().toString().padStart(2,"0");
-  document.getElementById("relogio").innerText=h+":"+m+":"+s;
+
+  let a=new Date()
+
+  let h=a.getHours().toString().padStart(2,"0")
+  let m=a.getMinutes().toString().padStart(2,"0")
+  let s=a.getSeconds().toString().padStart(2,"0")
+
+  document.getElementById("relogio").innerText =
+  h+":"+m+":"+s
+
 }
-setInterval(atualizarRelogio,1000);
-atualizarRelogio();
+
+setInterval(atualizarRelogio,1000)
+atualizarRelogio()
+
+
 
 /* ==================== LIVRO ==================== */
+
 function salvar(){
-  let t=document.getElementById("livro").value;
-  localStorage.setItem("livro",t);
+
+  let t=document.getElementById("livro").value
+
+  localStorage.setItem("livro",t)
+
 }
+
 function limpar(){
-  localStorage.removeItem("livro");
-  document.getElementById("livro").value="";
+
+  localStorage.removeItem("livro")
+
+  document.getElementById("livro").value=""
+
 }
-window.onload=function(){
-  let t=localStorage.getItem("livro");
-  if(t){document.getElementById("livro").value=t;}
-}
+
+
 
 /* ==================== MINIJOGO ==================== */
-let pontos=0;
+
+let pontos=0
+
 function clicar(){
-  pontos++;
-  document.getElementById("pontos").innerText=pontos;
-  if(pontos==100) conquista("Curioso","Você chegou a 100 pontos");
-  if(pontos==200) conquista("Cliqueiro","200 pontos!");
-  if(pontos==300) conquista("Sem vida","300 pontos kkk");
+
+  pontos++
+
+  document.getElementById("pontos").innerText=pontos
+
+  if(pontos==100){
+  conquista("Curioso","Você chegou a 100 pontos")
+  }
+
+  if(pontos==200){
+  conquista("Cliqueiro","200 pontos!")
+  }
+
+  if(pontos==300){
+  conquista("Sem vida","300 pontos kkk")
+  }
+
 }
+
+
+
 function conquista(titulo,texto){
-  let c=document.getElementById("conquista");
-  document.getElementById("titulo").innerText="🏆 "+titulo;
-  document.getElementById("texto").innerText=texto;
-  c.classList.add("mostrar");
-  setTimeout(()=>{c.classList.remove("mostrar");},4000);
+
+  let c=document.getElementById("conquista")
+
+  document.getElementById("titulo").innerText="🏆 "+titulo
+  document.getElementById("texto").innerText=texto
+
+  c.classList.add("mostrar")
+
+  setTimeout(()=>{
+  c.classList.remove("mostrar")
+  },4000)
+
 }
+
+
 
 /* ==================== ESTRELAS ==================== */
-let canvas=document.getElementById("estrelas");
-let ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-let estrelas=[];
-for(let i=0;i<20;i++){
-  estrelas.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});
-}
-function animar(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="white";
-  for(let e of estrelas){
-    ctx.beginPath();
-    ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
-    ctx.fill();
-    e.y+=0.3;
-    if(e.y>canvas.height) e.y=0;
-  }
-  requestAnimationFrame(animar);
-}
-animar();
-</script>
 
-</body>
-</html>
+let canvas=document.getElementById("estrelas")
+let ctx=canvas.getContext("2d")
+
+canvas.width=window.innerWidth
+canvas.height=window.innerHeight
+
+let estrelas=[]
+
+for(let i=0;i<20;i++){
+
+  estrelas.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    r:Math.random()*2
+  })
+
+}
+
+function animar(){
+
+  ctx.clearRect(0,0,canvas.width,canvas.height)
+
+  ctx.fillStyle="white"
+
+  for(let e of estrelas){
+
+    ctx.beginPath()
+    ctx.arc(e.x,e.y,e.r,0,Math.PI*2)
+    ctx.fill()
+
+    e.y+=0.3
+
+    if(e.y>canvas.height){
+      e.y=0
+    }
+
+  }
+
+  requestAnimationFrame(animar)
+
+}
+
+animar()
+
+
+
+/* ==================== QUANDO O SITE CARREGAR ==================== */
+
+window.onload=function(){
+
+  document.getElementById("espera").style.display="none"
+
+  let t=localStorage.getItem("livro")
+
+  if(t){
+    document.getElementById("livro").value=t
+  }
+
+}
+
+</script>
