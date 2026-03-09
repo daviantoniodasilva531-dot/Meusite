@@ -171,58 +171,6 @@ c.classList.remove("mostrar");
 }
 
 /* ESTRELAS */
-let canvas=document.getElementById("estrelas");
-let ctx=canvas.getContext("2d");
+let canvas=document.getElemk2d");
 
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-
-let estrelas=[];
-
-for(let i=0;i<50;i++){
-estrelas.push({
-x:Math.random()*canvas.width,
-y:Math.random()*canvas.height,
-r:Math.random()*2
-});
-}
-
-function animar(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-ctx.fillStyle="white";
-
-for(let e of estrelas){
-ctx.beginPath();
-ctx.arc(e.x,e.y,e.r,0,Math.PI*2);
-ctx.fill();
-
-e.y+=0.3;
-if(e.y>canvas.height){
-e.y=0;
-}
-}
-
-requestAnimationFrame(animar);
-}
-
-animar();
-
-/* QUANDO CARREGAR */
-window.onload=function(){
-
-let espera=document.getElementById("espera");
-if(espera){
-espera.style.display="none";
-}
-
-let t=localStorage.getItem("livro");
-if(t){
-document.getElementById("livro").value=t;
-}
-
-}
-
-</script>
-
-</body>
-</html>
+canvbouop
